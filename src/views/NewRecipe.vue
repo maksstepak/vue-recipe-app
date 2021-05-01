@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addRecipe" class="form">
+    <form @submit.prevent="addRecipe(newRecipe)" class="form">
       <h3>Add a new recipe</h3>
       <label for="name">Name</label>
       <input v-model="newRecipe.name" id="name" />
@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "NewRecipe",
   data() {
@@ -64,10 +66,7 @@ export default {
     };
   },
   methods: {
-    addRecipe() {
-      console.log(this.newRecipe);
-      // TODO: save the recipe
-    },
+    ...mapActions(["addRecipe"]),
   },
 };
 </script>
