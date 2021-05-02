@@ -1,10 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import RecipeList from "../views/RecipeList.vue";
 import NewRecipe from "../views/NewRecipe.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/",
+    name: "RecipeList",
+    component: RecipeList,
+  },
   {
     path: "/recipes/new",
     name: "NewRecipe",
