@@ -42,7 +42,7 @@
       <textarea v-model="newRecipe.ingredients" id="ingredients"></textarea>
       <label for="instructions">Instructions</label>
       <textarea v-model="newRecipe.instructions" id="instructions"></textarea>
-      <button>Save the recipe</button>
+      <button><font-awesome-icon icon="save" /> Save the recipe</button>
     </form>
   </div>
 </template>
