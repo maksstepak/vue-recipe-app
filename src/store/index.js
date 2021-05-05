@@ -31,6 +31,14 @@ const store = new Vuex.Store({
         createdAt: dayjs().format(),
         ...recipe,
       });
+
+      Vue.swal({
+        position: "top-end",
+        icon: "success",
+        title: "Your recipe has been saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   },
   modules: {},
