@@ -13,7 +13,10 @@
           class="recipe-list__link recipe-list__link--success"
           ><font-awesome-icon icon="file-alt" /> Show details</router-link
         >
-        <button class="recipe-list__link recipe-list__link--danger">
+        <button
+          @click="deleteRecipe(recipe.id)"
+          class="recipe-list__link recipe-list__link--danger"
+        >
           <font-awesome-icon icon="trash-alt" /> Delete
         </button>
       </div>
@@ -31,6 +34,23 @@ export default {
   name: "RecipeList",
   computed: {
     ...mapGetters(["recipes"]),
+  },
+  methods: {
+    async deleteRecipe(id) {
+      const result = await this.$swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        this.$store.dispatch("removeRecipe", id);
+      }
+    },
   },
 };
 </script>

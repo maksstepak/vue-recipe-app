@@ -23,6 +23,10 @@ const store = new Vuex.Store({
     addRecipe(state, recipe) {
       state.recipes.push(recipe);
     },
+    removeRecipe(state, id) {
+      const index = state.recipes.findIndex((recipe) => recipe.id === id);
+      state.recipes.splice(index, 1);
+    },
   },
   actions: {
     addRecipe({ commit }, recipe) {
@@ -36,6 +40,17 @@ const store = new Vuex.Store({
         position: "top-end",
         icon: "success",
         title: "Your recipe has been saved",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    },
+    removeRecipe({ commit }, id) {
+      commit("removeRecipe", id);
+
+      Vue.swal({
+        position: "top-end",
+        icon: "success",
+        title: "Your recipe has been deleted",
         showConfirmButton: false,
         timer: 1500,
       });
