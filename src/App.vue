@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-@import "@/scss/_variables.scss";
+@import "@/scss/_variables";
 
 body {
   margin: 0;
