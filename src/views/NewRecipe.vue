@@ -1,15 +1,33 @@
 <template>
   <div>
-    <form @submit.prevent="addRecipe(newRecipe)" class="form">
+    <form @submit.prevent="addRecipe" class="form">
       <h3 class="form__title">Add new recipe</h3>
       <label for="name" class="form__label">Name</label>
-      <input v-model="newRecipe.name" id="name" class="form__input" />
+      <input v-model.trim="newRecipe.name" id="name" class="form__input" />
+      <div v-if="$v.newRecipe.name.$error">
+        <div class="form__error" v-if="!$v.newRecipe.name.required">
+          Field is required
+        </div>
+        <div class="form__error" v-if="!$v.newRecipe.name.minLength">
+          Name must have at least
+          {{ $v.newRecipe.name.$params.minLength.min }} letters.
+        </div>
+        <div class="form__error" v-if="!$v.newRecipe.name.maxLength">
+          Name must have at most
+          {{ $v.newRecipe.name.$params.maxLength.max }} letters.
+        </div>
+      </div>
       <label for="description" class="form__label">Description</label>
       <textarea
-        v-model="newRecipe.description"
+        v-model.trim="newRecipe.description"
         id="description"
         class="form__input"
       ></textarea>
+      <div v-if="$v.newRecipe.description.$error">
+        <div class="form__error" v-if="!$v.newRecipe.description.required">
+          Field is required
+        </div>
+      </div>
       <label for="totalTime" class="form__label">Total time</label>
       <input
         v-model.number="newRecipe.totalTime"
@@ -17,6 +35,11 @@
         id="totalTime"
         class="form__input"
       />
+      <div v-if="$v.newRecipe.totalTime.$error">
+        <div class="form__error" v-if="!$v.newRecipe.totalTime.required">
+          Field is required
+        </div>
+      </div>
       <label for="servings" class="form__label">Servings</label>
       <input
         v-model.number="newRecipe.servings"
@@ -24,6 +47,11 @@
         id="servings"
         class="form__input"
       />
+      <div v-if="$v.newRecipe.servings.$error">
+        <div class="form__error" v-if="!$v.newRecipe.servings.required">
+          Field is required
+        </div>
+      </div>
       <fieldset>
         <legend class="form__label">Categories</legend>
         <input
@@ -50,17 +78,27 @@
       </fieldset>
       <label for="ingredients" class="form__label">Ingredients</label>
       <textarea
-        v-model="newRecipe.ingredients"
+        v-model.trim="newRecipe.ingredients"
         id="ingredients"
         class="form__input"
       ></textarea>
+      <div v-if="$v.newRecipe.ingredients.$error">
+        <div class="form__error" v-if="!$v.newRecipe.ingredients.required">
+          Field is required
+        </div>
+      </div>
       <label for="instructions" class="form__label">Instructions</label>
       <textarea
-        v-model="newRecipe.instructions"
+        v-model.trim="newRecipe.instructions"
         id="instructions"
         class="form__input"
       ></textarea>
-      <button class="form__button">
+      <div v-if="$v.newRecipe.instructions.$error">
+        <div class="form__error" v-if="!$v.newRecipe.instructions.required">
+          Field is required
+        </div>
+      </div>
+      <button type="submit" class="form__button">
         <font-awesome-icon icon="save" /> Save the recipe
       </button>
     </form>
@@ -68,7 +106,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
   name: "NewRecipe",
@@ -86,7 +124,38 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addRecipe"]),
+    addRecipe() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.$store.dispatch("addRecipe", this.newRecipe);
+        Object.assign(this.$data, this.$options.data.apply(this));
+        this.$v.$reset();
+      }
+    },
+  },
+  validations: {
+    newRecipe: {
+      name: {
+        required,
+        minLength: minLength(2),
+        maxLength: maxLength(255),
+      },
+      description: {
+        required,
+      },
+      totalTime: {
+        required,
+      },
+      servings: {
+        required,
+      },
+      ingredients: {
+        required,
+      },
+      instructions: {
+        required,
+      },
+    },
   },
 };
 </script>
@@ -114,6 +183,10 @@ export default {
   &__input {
     font-family: inherit;
     border: solid 1px $black;
+  }
+
+  &__error {
+    color: $red;
   }
 
   &__button {
