@@ -1,24 +1,34 @@
-# vue-recipe-app
+# Recipe App
 
-## Project setup
-```
+This is a recipe web application.
+
+## 🔧 Technologies
+
+- [Vue.js 2](https://vuejs.org/)
+- [Vuex](https://vuex.vuejs.org/)
+- [Vue Router](https://router.vuejs.org/)
+
+## 🛠️ Setup
+
+### Prerequisites
+
+- Node.js >= 15
+
+### Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/maksstepak/vue-recipe-app.git
+
+# Navigate into the directory
+cd vue-recipe-app
+
+# Install depedencies
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+# Runs the app in the development mode
 npm run serve
-```
 
-### Compiles and minifies for production
-```
+# Build for production
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
