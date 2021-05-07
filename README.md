@@ -32,3 +32,7 @@ npm run serve
 # Build for production
 npm run build
 ```
+
+## 🚀 Demo
+
+Check it here: [Recipe App](https://wizardly-easley-a011a3.netlify.app/)
